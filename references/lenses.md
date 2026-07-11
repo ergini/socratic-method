@@ -9,7 +9,7 @@ These are for the un-runnable judgment calls - is this the right shape, am I ove
 - Bad: "Steve Jobs would remove the sidebar."
 - Good: "If I shipped this with one fewer surface, which one goes, and why is it not the sidebar?"
 
-Never invent a principle to fit an argument. If you do not know what someone actually stood for, do not invoke them. The point is to interrogate the work, not to decorate a decision you already made.
+Never invent a principle to fit an argument. If you do not know what someone actually stood for, do not invoke them. The point is to put the work on trial, not to decorate a decision you already made.
 
 ## Contents
 1. Subtraction

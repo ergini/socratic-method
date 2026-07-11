@@ -1,19 +1,19 @@
 # Asking the user
 
-This is the demoted mechanic. In v0.2 the interview was the whole skill; in v0.3 it is a rare fallback. Read the gate first; the domain question sets at the bottom are only for the one case where the user explicitly asks you to help capture intent up front.
+Self-questioning does the heavy lifting, and most doubts end in a check. But some questions are genuinely the user's, and part of being a good partner is spotting them fast and asking them well. The dividing line: **facts get checked, intent gets asked.**
 
-## The gate for a user question
+## When a question is the user's
 
-Ask the user a question only when **both** hold:
+Ask the user a question when **both** hold:
 
-1. Self-questioning surfaced a genuine ambiguity in the user's **intent** - what they want, what "done" means, which tradeoff they prefer. Not a fact, an API shape, a config default, or a runtime behavior. Those you **check**, you do not ask.
+1. The ambiguity is about the user's **intent** - what they want, what "done" means, which tradeoff they prefer - and it survives every check you can run. A fact, an API shape, a config default, a runtime behavior: those you **check**, you do not ask.
 2. Guessing wrong is **costly and hard to reverse**. If a wrong guess is cheap to undo, guess, ship, and let them correct it.
 
-If a run, a grep, a test, or a doc read could answer it, do that. "Check, don't ask" is the rule; the question is the exception to it.
+If a run, a grep, a test, or a doc read could answer it, do that first. "Check, don't ask" is what keeps the questions you do ask worth answering.
 
-## How to ask, when you must
+## How to ask
 
-- **One question at a time.** Never a list. A list is a form, and it invites the interview relapse this version exists to prevent.
+- **One question at a time.** Never a list. A list is a form; a single question is a conversation.
 - **Offer the decision, not the open question.** Name the concrete fork and its tradeoff: *"Raise the timeout to 90s (one line) or stream the export (safer under load, more work). Which?"* This is answerable in a word. "How do you want exports to work?" is not.
 - **Translate for the reader.** If the user is not the one who will weigh a technical fork, surface the consequence, not the mechanism: not "sync vs async", but "slower now but simpler, or faster but more moving parts."
 
@@ -26,9 +26,11 @@ If a run, a grep, a test, or a doc read could answer it, do that. "Check, don't 
 
 ---
 
-## Capturing intent on request (the rare up-front case)
+## Capturing intent on request
 
-If, and only if, the user explicitly wants help thinking through what they are building before you start, these domain question sets help capture intent into `.socratic/PROJECT.md` (see `assets/PROJECT.template.md`). Same rules as any user contact: one question at a time, react before continuing, refuse hedges, read it back at the end. This is a service you offer when asked, not a gate you impose.
+When the user wants help thinking through what they are building before you start, these domain question sets capture intent into `.socratic/PROJECT.md` (see `assets/PROJECT.template.md`). Same rules as any user contact: one question at a time, react before continuing, refuse hedges, read it back at the end. This is a service you offer when asked, not a gate you impose.
+
+These sets are the user-facing twins of the self-lenses in `lenses.md`: by default, aim them at your own work, and put one to the user when the answer is genuinely theirs. Any factual-looking item in them ("what do people use instead today?") still gets checked first where checkable.
 
 ### Product / app / SaaS
 1. In one word, what should someone feel using this? *(Refuse "easy", "simple", "clean" - not feelings.)*

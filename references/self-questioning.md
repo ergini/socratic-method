@@ -44,13 +44,14 @@ Strongest last-word when verifiers disagree, top to bottom:
 2. **Type checker / compiler / linter** - a whole class of wrongness, ruled out statically.
 3. **A constructed counterexample** - one input that would break the claim, run.
 4. **Reading the real source or data** - the actual call site, schema, doc, or row, not your memory of it.
-5. **Clean-frame re-derivation or a fresh-context reviewer** - re-answer from a blank slate, or delegate to a context that does not share your blind spots.
-6. **Sampling and voting** - weakest. Agreement is not correctness; only *divergence* is a signal.
+5. **A fresh-context reviewer** - delegate the question to a context that never saw your reasoning and does not share your blind spots.
+6. **Clean-frame re-derivation** - re-answer from a blank slate without looking at your draft. Same head, same blind spots: a debiasing move, not a verdict, and the floor when nothing above is reachable.
+7. **Sampling and voting** - weakest. Agreement is not correctness; only *divergence* is a signal.
 
 Two rules on top of the order:
 
 - **Cheapest that could flip the decision, not strongest reachable.** The ranking is about *trust when they disagree*, not about always climbing to the top. If a five-second grep settles it, do not write a new test. Climb only when the cheap check is inconclusive or the stakes justify the cost.
-- **Does the verifier actually exercise the doubt?** A green run over code that mocks the failing path, a test that asserts the current buggy behavior, a compile that passes through an `any`, a flaky suite - each is a real check of the wrong thing. Ask what the verifier covered before you trust it. Prefer the narrowest reproduction (a single test, a REPL snippet, a targeted repro script) over the whole suite; it is cheaper and it isolates the thing you doubt.
+- **Does the verifier actually exercise the doubt?** A green run over code that mocks the failing path, a test that asserts the current buggy behavior, a compile that passes through an `any`, a flaky suite - each is a real check of the wrong thing. Ask what the verifier covered before you trust it. Prefer the narrowest reproduction (a single test, a REPL snippet, a targeted repro script) over the whole suite; it is cheaper and it isolates the thing you doubt. On Normal-tier work, do not author new tests or repro scripts to serve a check - reach for a verifier that already exists (an existing test, a grep, a REPL one-liner, the running app). Writing a new verifier is a High-stakes spend.
 
 ---
 
@@ -92,7 +93,7 @@ Read-only agents, sandboxless chat, environments where the suite needs credentia
 
 "Is this the right abstraction?", "will this scale?", "am I solving the stated problem or an adjacent one?" have no compiler verdict and no user to arbitrate. They are not "cut silently," and they are not the user's to answer. Their external check is a **clean frame**:
 
-- **Re-derive from a blank slate.** Re-answer the question from the stated premises *without looking at your prior conclusion*, then compare. This is the opposite of re-reading: re-reading defends the draft, re-derivation ignores it, and divergence between the two is the signal.
+- **Re-derive from a blank slate.** Re-answer the question from the stated premises *without looking at your prior conclusion*, then compare. This is the opposite of re-reading: re-reading defends the draft, re-derivation ignores it, and divergence between the two is the signal. It is still the same head, so treat agreement as weak evidence; the real finding is divergence.
 - **Delegate to a fresh-context reviewer.** A sub-agent or a separate pass that never saw your reasoning is the practical antidote to correlated errors - the single strongest "external" verifier when no runtime applies.
 - **Name the tradeoff out loud** (to yourself): what you are optimizing, what you are sacrificing, and the one condition under which the rejected option wins. If that condition is plausible in this codebase, you have found a real fork - which is either a thing to test or, if it is genuinely about intent, the rare user question.
 

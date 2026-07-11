@@ -48,6 +48,6 @@ Notes on use, delete before committing:
 - Keep it short enough that staleness is visible at a glance.
 - Prefer git-ignored / local per worktree unless your team opts in, so
   stale UNVERIFIED entries do not travel across branches and get trusted.
-- It is not a place to justify asking the user questions. It is a place to
-  remember which of your own beliefs still owe a check.
+- It records which of your own beliefs still owe a check. Questions of intent
+  still go to the user when they are genuinely theirs.
 -->

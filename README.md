@@ -59,9 +59,10 @@ decision only you can make - not a play-by-play of it doubting itself. If your
 transcript fills up with "let me question myself," the skill is failing, not
 working.
 
-It asks *you* a question only as a rare fallback: when self-questioning surfaces
-a genuine ambiguity in your intent that no check can resolve, and guessing wrong
-is costly. If a grep or a run could answer it, it checks instead of asking.
+And it is smart about which questions are yours. Facts get checked: an API shape
+or a config default is a grep, not a question. Intent gets asked: when what
+"done" means, or which tradeoff to take, survives every check and a wrong guess
+is costly, it brings you one sharp question with the options laid out.
 
 ---
 
@@ -151,7 +152,7 @@ socratic-method/
 |- references/
 |  |- self-questioning.md       # the full toolkit: verifier ladder, surrogate verifiers, degraded/read-only mode, nondeterminism
 |  |- lenses.md                 # real practitioners' operating principles, turned into questions you ask your own work
-|  \- interviews.md             # the demoted user-interview: the two-condition gate for when to ask, plus domain question sets
+|  \- interviews.md             # when a question is genuinely the user's, how to ask it well, plus domain intent question sets
 |- assets/
 |  \- PROJECT.template.md       # the slim record: intent + live, re-checkable assumptions
 |- evals/

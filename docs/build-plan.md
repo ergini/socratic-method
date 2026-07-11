@@ -28,8 +28,9 @@ assumption underneath it, and then rationalized. The highest-leverage
 intervention is not more questions for the human. It is the model turning the
 elenchus on its own work.
 
-So v0.3 keeps the Socratic frame and inverts its target. The user-interview
-survives as a tightly gated fallback (Section 6). Everything else is new.
+So v0.3 keeps the Socratic frame and inverts its target. Asking the user
+survives, aimed precisely at what is genuinely theirs (Section 6). Everything
+else is new.
 
 ---
 
@@ -196,14 +197,14 @@ ones as strong nudges, not guarantees.
 
 ---
 
-## 6. The user-interview, demoted
+## 6. Asking the user: facts get checked, intent gets asked
 
-Kept, but structurally demoted from the main mechanic to a rare fallback, fired
-only from inside RECONCILE, only when **both** hold: a genuine ambiguity in the
-user's *intent* (not a fact, which is checked), and a wrong guess that is costly
-and hard to reverse. "Check, don't ask" is the governing rule. When it does fire,
-it is one question offering the concrete decision and its tradeoff, not an
-open-ended interview.
+Asking the user remains part of the craft; v0.3 aims it precisely. A question
+goes to the user when **both** hold: a genuine ambiguity in the user's *intent*
+(not a fact, which is checked), and a wrong guess that is costly and hard to
+reverse. "Check, don't ask" is the governing rule for everything checkable. When
+a question does go to the user, it is one question offering the concrete
+decision and its tradeoff, asked well.
 
 The one place user-contact and self-questioning interact is pressure. The
 sycophancy literature (Sharma et al.) and FlipFlop say models cave to pushback;
