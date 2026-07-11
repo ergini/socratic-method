@@ -1,1 +1,8 @@
 .DS_Store
+
+# Local installs of this skill, e.g. from running `npx socratic-method` inside the
+# repo to test the installer. These are the installer's per-tool output dirs.
+.claude/skills/
+.cursor/skills/
+.windsurf/skills/
+.agents/skills/
