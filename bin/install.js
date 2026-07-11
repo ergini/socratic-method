@@ -11,6 +11,7 @@ const path = require('path');
 
 const PKG_ROOT = path.join(__dirname, '..');
 const SKILL_FILES = ['SKILL.md', 'references', 'assets', 'LICENSE'];
+const REPO = 'github.com/ergini/socratic-method';
 
 // Verified skill-discovery directories per tool. `global` is null where the tool
 // has no global/personal skills directory (Cursor and Windsurf are project-only),
@@ -22,9 +23,38 @@ const TOOLS = {
   codex:    { label: 'Codex CLI',   project: '.agents/skills',   global: '.agents/skills' },
 };
 
+// Tools whose users invoke a skill with a slash command.
+const SLASH_TOOLS = new Set(['claude', 'cursor']);
+
+// --- color: on only for a real terminal, off when piped / NO_COLOR / dumb ------
+function colorOn(stream) {
+  if (process.env.FORCE_COLOR) return true;
+  if (process.env.NO_COLOR || process.env.TERM === 'dumb') return false;
+  return Boolean(stream && stream.isTTY);
+}
+function painter(on) {
+  const wrap = (code) => (str) => (on ? `\x1b[${code}m${str}\x1b[0m` : String(str));
+  return {
+    bold: wrap('1'), dim: wrap('2'), red: wrap('31'),
+    green: wrap('32'), cyan: wrap('36'), greenBold: wrap('1;32'),
+  };
+}
+const out = painter(colorOn(process.stdout));
+const err = painter(colorOn(process.stderr));
+
+// Shorten a path for display: ./relative when under cwd, ~/… when under home.
+function prettyPath(p) {
+  const rel = path.relative(process.cwd(), p);
+  if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) return '.' + path.sep + rel;
+  const home = os.homedir();
+  if (p === home) return '~';
+  if (p.startsWith(home + path.sep)) return '~' + path.sep + path.relative(home, p);
+  return p;
+}
+
 function help() {
   console.log(`
-  socratic-method - install the self-questioning Agent Skill
+  ${out.bold('socratic-method')} - install the self-questioning Agent Skill
 
   Usage:
     npx socratic-method [options]
@@ -63,7 +93,7 @@ function parseArgs(argv) {
 }
 
 function fail(msg) {
-  console.error(`\n  socratic-method: ${msg}\n`);
+  console.error(`\n  ${err.red('socratic-method:')} ${msg}\n`);
   process.exit(1);
 }
 
@@ -78,6 +108,20 @@ function resolveBase(opts) {
   return path.join(process.cwd(), tool.project);
 }
 
+function report({ dest, verb, label, showSlash }) {
+  const lines = [
+    '',
+    `  ${out.greenBold('✓')} ${out.bold('socratic-method')} ${out.dim('· ' + verb)}`,
+    `    ${out.cyan(prettyPath(dest))}  ${out.dim('·  ' + label)}`,
+    '',
+    `    Your agent will now cross-examine its own work before it ships,`,
+    `    ${out.dim('activating when you debug, plan, or touch something irreversible.')}`,
+  ];
+  if (showSlash) lines.push(`    ${out.dim('Invoke it directly with')} ${out.cyan('/socratic-method')}${out.dim('.')}`);
+  lines.push('', `    ${out.dim('→ ' + REPO)}`, '');
+  console.log(lines.join('\n'));
+}
+
 function main() {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help) { help(); return; }
@@ -88,23 +132,20 @@ function main() {
   }
 
   const dest = path.join(resolveBase(opts), 'socratic-method');
-  const existed = fs.existsSync(dest);
-  if (existed && !opts.force) {
-    // Re-installing is how you update, so this is a note, not an error.
-    console.log(`  Updating existing install at ${dest}`);
-  }
+  const verb = fs.existsSync(dest) ? 'updated' : 'installed'; // re-running is how you update
 
   fs.mkdirSync(dest, { recursive: true });
   for (const name of SKILL_FILES) {
     const src = path.join(PKG_ROOT, name);
-    if (fs.existsSync(src)) {
-      fs.cpSync(src, path.join(dest, name), { recursive: true, force: true });
-    }
+    if (fs.existsSync(src)) fs.cpSync(src, path.join(dest, name), { recursive: true, force: true });
   }
 
-  const label = opts.dir ? 'custom directory' : TOOLS[opts.tool].label;
-  console.log(`\n  ✓ socratic-method installed → ${dest}  (${label})`);
-  console.log(`    Your agent activates it on its own; where supported, invoke it with /socratic-method.\n`);
+  report({
+    dest,
+    verb,
+    label: opts.dir ? 'custom directory' : TOOLS[opts.tool].label,
+    showSlash: !opts.dir && SLASH_TOOLS.has(opts.tool),
+  });
 }
 
 main();

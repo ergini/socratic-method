@@ -1,6 +1,6 @@
 {
   "name": "socratic-method",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An Agent Skill that makes an AI coding agent cross-examine its own work before it ships: predict-then-run, gated, and mostly silent. Run via npx to install SKILL.md into your agent's skills directory.",
   "bin": {
     "socratic-method": "bin/install.js"
