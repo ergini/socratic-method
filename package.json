@@ -1,0 +1,42 @@
+{
+  "name": "socratic-method",
+  "version": "0.3.2",
+  "description": "An Agent Skill that makes an AI coding agent cross-examine its own work before it ships: predict-then-run, gated, and mostly silent. Run via npx to install SKILL.md into your agent's skills directory.",
+  "bin": {
+    "socratic-method": "bin/install.js"
+  },
+  "files": [
+    "SKILL.md",
+    "references/",
+    "assets/",
+    "bin/",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16.7"
+  },
+  "keywords": [
+    "agent-skill",
+    "skill.md",
+    "claude",
+    "claude-code",
+    "cursor",
+    "codex",
+    "windsurf",
+    "socratic",
+    "ai",
+    "llm",
+    "self-correction",
+    "predict-then-run"
+  ],
+  "license": "MIT",
+  "author": "Ergini (https://ergini.com)",
+  "homepage": "https://github.com/ergini/socratic-method#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ergini/socratic-method.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ergini/socratic-method/issues"
+  }
+}

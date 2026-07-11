@@ -1,6 +1,6 @@
 {
   "skill_name": "socratic-method",
-  "version": "0.3",
+  "version": "0.3.2",
   "note": "v0.3 self-questioning is a property of how the model works, not of what it says. It is largely INTERNAL: the target behavior is a better output and a cheaper path, with the doubt invisible in the transcript. So score two things that are actually observable: (1) TOOL TRACE - did a real external check (a run, a grep, a read) precede the claim it supposedly verified, and did a committed prediction precede the run? (2) OUTPUT DELTA - did the check change the plan or correctly recalibrate confidence? Do NOT reward narrated doubt; a transcript full of 'let me question myself' is a FAIL, not a pass. Each eval runs with a tool-enabled agent against a scripted repo/environment; a second agent may play the persona. Read the tool trace, not just the prose.",
   "personas": {
     "developer": "Wants working code. Gives a task, not a spec. Fine with the model checking things itself, and with the occasional question that is genuinely his to answer (intent, tradeoffs).",

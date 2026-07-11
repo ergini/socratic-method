@@ -86,9 +86,24 @@ is costly, it brings you one sharp question with the options laid out.
 
 ## Install
 
-The skill lives at the root of this repo (`SKILL.md` plus `references/` and
-`assets/`), so installing it is just putting this folder where your agent looks
-for skills. Clone it once and let the agent activate it on its own.
+The fastest path is `npx` - it copies `SKILL.md` and its `references/` and
+`assets/` into your agent's skills directory, no clone required:
+
+```bash
+npx socratic-method                 # ./.claude/skills   (Claude Code, this project)
+npx socratic-method --global        # ~/.claude/skills   (every project)
+npx socratic-method --tool cursor   # ./.cursor/skills
+npx socratic-method --tool codex -g # ~/.agents/skills
+npx socratic-method --dir ./skills  # ./skills/socratic-method
+```
+
+`--tool` is one of `claude` (default), `cursor`, `windsurf`, or `codex`; `--global`
+installs it for every project (Claude Code and Codex only - Cursor and Windsurf are
+project-scoped). Re-run it any time to update. Prefer not to touch the npm registry?
+`npx github:ergini/socratic-method` runs the same installer straight from the repo.
+
+Or do it by hand - the skill is just files, so clone this folder into wherever your
+agent looks for skills and let it activate on its own.
 
 ### Claude Code
 
@@ -114,8 +129,9 @@ irreversible.
 git clone https://github.com/ergini/socratic-method.git .cursor/skills/socratic-method
 ```
 
-Cursor also scans `.claude/skills/`, so a project already set up for Claude Code
-needs nothing extra. Invoke with `/socratic-method` or `@` for on-demand use.
+Cursor loads skills per project from `.cursor/skills/` and has no global skills
+folder, so each project needs its own copy - it does not read `.claude/skills/`.
+Invoke with `/socratic-method` or `@` for on-demand use.
 
 ### Windsurf
 
@@ -126,14 +142,18 @@ git clone https://github.com/ergini/socratic-method.git .windsurf/skills/socrati
 ### Codex CLI
 
 ```bash
-git clone https://github.com/ergini/socratic-method.git .codex/skills/socratic-method
+git clone https://github.com/ergini/socratic-method.git .agents/skills/socratic-method
 ```
+
+Codex scans `.agents/skills/` from your working directory up to the repo root; use
+`~/.agents/skills/` for a personal copy available in every project.
 
 ### Any other agent that reads SKILL.md
 
-The format is an open standard. Clone the repo into that tool's skills directory
-(commonly one of `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`) and it
-will pick up `SKILL.md` and its references.
+The format is an open standard, but each tool looks in its own place - Claude Code
+`.claude/skills/`, Cursor `.cursor/skills/`, Codex `.agents/skills/` - so check
+your tool's docs for its skills directory, clone the repo there, and it will pick
+up `SKILL.md` and its references.
 
 ### Claude.ai, ChatGPT, Gemini, or any chat UI (no filesystem)
 

@@ -4,7 +4,7 @@
 cross-examine its *own* work before it ships, instead of committing to its first
 plausible plan. The interlocutor is the model's work-in-progress, not the user.
 
-**Status:** v0.3. This document is the reasoning behind the skill. A note on
+**Status:** v0.3.2. This document is the reasoning behind the skill. A note on
 honesty, which is also the skill's thesis: every empirical finding below is cited
 **qualitatively**. Where a source reports a specific number, this document does
 not repeat it as though it were a coding benchmark. If you want the number, read
@@ -143,8 +143,8 @@ Three design decisions inside the gate came directly from stress-testing:
 
 Not all external verdicts are equal, and the strongest reachable one is not
 always the right one. The ranking (execution/tests > type checker > constructed
-counterexample > reading the real source > clean-frame re-derivation or a
-fresh-context reviewer > sampling-and-voting) is about **trust when verifiers
+counterexample > reading the real source > a fresh-context reviewer > clean-frame
+re-derivation > sampling-and-voting) is about **trust when verifiers
 disagree**. The *selection* rule is different: reach for the **cheapest verifier
 that could still flip the decision**, and climb only when it is inconclusive or
 the stakes justify the cost.
