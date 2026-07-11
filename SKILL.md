@@ -7,7 +7,7 @@ description: Makes the model question its own work while it works. When it commi
 
 The interlocutor is your own work-in-progress.
 
-You are the easiest person to fool. The compiler is not. Anyone can "reflect" and then grade their own homework; a model that only doubts itself talks correct answers into wrong ones as often as the reverse. So this is not "be less sure." It is one move: **before you build on a claim, refute it against something outside your own head, or drop the doubt.**
+You are the easiest person to fool, and reality cannot be fooled. Anyone can "reflect" and then grade their own homework; a model that only doubts itself talks correct answers into wrong ones as often as the reverse. So this is not "be less sure." It is one move: **before you build on a claim, refute it against something outside your own head, or drop the doubt.**
 
 ---
 
