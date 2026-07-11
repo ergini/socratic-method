@@ -1,13 +1,15 @@
 # Lenses
 
-A lens is a real practitioner's operating principle, turned into a question.
+A lens is a real practitioner's operating principle, turned into a question you ask **yourself** about your own work.
 
-**The rule that makes this work:** reason from the principle, never from the aura. A lens is a thinking tool you hold, not an authority you cite. Never tell someone "Apple would hate this." You do not have access to Apple. Use the lens to *generate the question*, then let the question stand on its own.
+These are for the un-runnable judgment calls - is this the right shape, am I over-building, does this have a point of view - where there is no compiler verdict (see `self-questioning.md`, section 6). A lens does not settle such a question by authority; it sharpens it, and the external check remains the clean frame: re-derive the answer from a blank slate, or hand it to a fresh-context reviewer, and see if it survives.
 
-- Bad: "Steve Jobs would say remove the sidebar."
-- Good: "If you shipped this with one fewer surface, which one goes? And why is it not the sidebar?"
+**The rule that makes this work:** reason from the principle, never from the aura. A lens is a thinking tool you hold, not an authority you cite. Never write "Apple would hate this" - you do not have access to Apple. Use the lens to *generate the question*, then let the question stand on its own.
 
-Never invent a principle to fit an argument. If you do not know what someone actually stood for, do not invoke them.
+- Bad: "Steve Jobs would remove the sidebar."
+- Good: "If I shipped this with one fewer surface, which one goes, and why is it not the sidebar?"
+
+Never invent a principle to fit an argument. If you do not know what someone actually stood for, do not invoke them. The point is to interrogate the work, not to decorate a decision you already made.
 
 ## Contents
 1. Subtraction
@@ -128,18 +130,18 @@ Never invent a principle to fit an argument. If you do not know what someone act
 
 ## 8. How to pick a lens
 
-Match the lens to the failure you suspect. That is the skill.
+Match the lens to the failure you suspect in your own work. That is the skill.
 
-| Symptom | Lens |
+| Symptom in the work | Lens |
 |---|---|
-| It is bloated, and they love every feature | Subtraction (Rams, Jobs, Saint-Exupéry) |
-| It is fine, and forgettable | Craft (Hermès), point of view (positioning) |
-| It is trying to please everyone | Sacrifice (Porter), the knife ("who is this not for?") |
-| They cannot say why it matters | Working backwards (Amazon PR/FAQ) |
-| They are fixing symptoms | Five whys, Feynman |
-| They are gold-plating and will never ship | Appetite (Shape Up), IKEA's price tag |
-| The plan is a list of bullets and nobody can find the argument | The six-pager |
-| They want you to fix it for them | Braintrust (name the problem, not the fix) |
-| They are confidently wrong | Predict, then run |
+| It is bloated, and I am attached to every part | Subtraction (Rams, Jobs, Saint-Exupéry) |
+| It works, and it is forgettable | Craft (Hermès), point of view (positioning) |
+| It is trying to serve every case | Sacrifice (Porter), the knife ("what is this not for?") |
+| I cannot say why it matters | Working backwards (Amazon PR/FAQ) |
+| I am fixing symptoms | Five whys, Feynman |
+| I am gold-plating and will not ship | Appetite (Shape Up), IKEA's price tag |
+| My plan is a list of bullets with no argument | The six-pager |
+| I want to be handed the answer | Braintrust (name the problem, not the fix) |
+| I am confidently sure | Predict, then run |
 
-If no lens fits, do not force one. A forced lens is name-dropping, which is worse than saying nothing.
+If no lens fits, do not force one. A forced lens is name-dropping in your own head, which is worse than saying nothing. And a lens is never the last word: if the judgment is load-bearing, it still owes a clean-frame re-derivation or a fresh reviewer.

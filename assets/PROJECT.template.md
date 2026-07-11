@@ -1,89 +1,53 @@
 # PROJECT
 
-> Written from the vision interview on YYYY-MM-DD. In the maker's own words.
-> This file is not documentation. It is the thing you get held to.
-> Every change below gets a date and a reason. Silent changes are how a vision dies.
+> Memory for self-questioning, not documentation and not an interview transcript.
+> Two things only: what this is trying to be, and the assumptions I am currently
+> standing on. Read it at a glance at session start; re-check an assumption only
+> when the task in front of me touches the code it covers.
 
 ---
 
-## What this is
-One sentence. Plain. Not a pitch.
+## Intent
+One or two lines. What this project is trying to be, and the few constraints and
+non-goals that are expensive to rediscover.
 
-## The word
-> "___"
+- Building: ___
+- Must not: ___ (the non-goals that are easy to violate by accident)
 
-The single word for what someone should feel. Everything else in this file is judged against it.
+## Live assumptions
+The load-bearing beliefs the current work rests on, each as a re-checkable
+assertion. Mark how and when it was last verified. Anything with no
+verify-command, or older than a few working sessions, is UNVERIFIED no matter
+what the label says - re-check it before you build on it.
 
-## The residue
-The one thing they must remember after they close it / put it down / walk away.
+```
+ASSUMES: <assertion>   (verified: <command or file you checked>, <date>)
+ASSUMES: <assertion>   (UNVERIFIED - guessing)
+```
 
-## The hill
-What we will not compromise, even if it costs us users, money, or time.
+Example:
 
-> "___"
+```
+ASSUMES: exports run synchronously in the request   (verified: grep ReportController, 2026-07-11)
+ASSUMES: author is never null on published reports  (UNVERIFIED - guessing)
+ASSUMES: the staging DB schema matches prod          (verified: migration log diff, 2026-07-09)
+```
 
-## The knife
-Who this is explicitly **not** for.
+## Corrections
+When reality contradicts an assumption, note what you learned, so a future
+session does not re-make the same wrong guess. Keep it to one line each.
 
-## Position
-- Closest thing that exists today: ___
-- We must be better at: ___
-- We are willing to be **worse** at: ___
-
-## The invisible stitch
-What we are doing that 95% will never notice, and the 5% will never forget.
-
-## Amateur tells
-What would make this look amateur. The things we have agreed we will never do.
-
-- ___
-- ___
-
-## Open contradictions
-Do not tidy these away. They are the most useful lines in the file.
-
-- We said "calm," and we want a streak counter. Unresolved.
-
-## Decision log
-
-| Date | Decision | Reason |
-|---|---|---|
-| 2026-07-11 | Vision captured. The word is "calm." | Initial interview. |
+- 2026-07-11: the export crash was an upstream timeout, not a null bug. The
+  synchronous-export assumption is the real risk, not author-null.
 
 ---
 
 <!--
-EXAMPLE, for shape only. Delete before use.
-
-## What this is
-An AI photoshoot tool so a boutique owner with one phone and no budget can produce imagery that looks like it cost 3,000 euros.
-
-## The word
-> "Expensive."
-Not "easy," not "fast." The output has to look expensive. If it looks AI-generated, we have failed, no matter how fast it was.
-
-## The residue
-"I can't believe I made that."
-
-## The hill
-> "We never ship a model that looks like an AI model. No plastic skin, no seven fingers, no dead eyes. If the only way to hit a deadline is to loosen this, we miss the deadline."
-
-## The knife
-Not for hobbyists posting to a personal Instagram. Not for enterprises with an in-house studio. For a boutique owner who is currently shooting on a bedsheet.
-
-## Position
-- Closest today: Botika.
-- Better at: output that a stylist would sign off on. Curated, opinionated presets instead of a prompt box.
-- Willing to be worse at: raw flexibility. We will offer fewer options than they do, on purpose.
-
-## The invisible stitch
-The fabric drape. Nobody will say "the drape is good." They will say "this one looks real," and they will not know why.
-
-## Amateur tells
-- A prompt box on the homepage.
-- A "Powered by AI" badge.
-- Stock-photo models on our own landing page.
-
-## Open contradictions
-- The word is "expensive," and the pricing page is the cheapest-looking screen in the product. Unresolved.
+Notes on use, delete before committing:
+- This file is an accelerant. The skill works fully without it.
+- Keep it short enough that staleness is visible at a glance.
+- Prefer git-ignored / local per worktree unless your team opts in, so
+  stale UNVERIFIED entries do not travel across branches and get trusted.
+- It is not a place to justify asking the user questions. It is a place to
+  remember which of your own beliefs still owe a check.
 -->

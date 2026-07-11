@@ -1,87 +1,85 @@
 # Socratic
 
-**A proactive thinking partner for your AI agent.** It interviews you until it
-understands what you are actually building, writes that vision down in your own
-words, and then holds you to it. When a later request contradicts something you
-committed to, it says so before writing a line of code, then does what you
-decide.
+**A skill that makes your AI agent cross-examine its own work before it ships.**
+When it commits to a plan, a diagnosis, a refactor, or a confident claim, it
+turns Socratic elenchus inward: name the load-bearing assumption, then refute it
+against something outside its own head - run it, test it, grep the real source,
+construct a counterexample - before building on it. The spine is
+**predict-then-run**: commit an expected result, then check, and treat the gap
+as the finding.
 
-It is a portable [Agent Skill](https://agentskills.io) (a single `SKILL.md`
-plus references). It works in Claude Code, Cursor, Windsurf, Codex, and any
-other tool that reads the `SKILL.md` format, and it degrades gracefully into a
-chat UI as a Project instruction or custom style.
-
----
-
-## Read this first: it will not always ask you questions
-
-The most common way a "Socratic AI" fails is by interrogating you about a typo.
-This one is built to not do that.
-
-It decides, up front, which of three modes it is in, and **most of the time the
-answer is "just do the work."**
-
-- **DISCOVER** - you are starting something real and there is no vision on file
-  yet. It runs a short interview (8 questions, 10 to 20 minutes) and writes the
-  result down.
-- **CONFRONT** - a vision exists and your new request contradicts it. It names
-  the contradiction in one line, asks one question, then obeys either way.
-- **EXECUTE** - everything else. It just does the work. Quietly. No teaching, no
-  questions, no lecture. This is most turns, and that is correct.
-
-Errands (a regex, a color code, a lookup) get answered immediately. Production
-incidents get help, not philosophy. If you ask for the answer, you get the
-answer, instantly and with no guilt trip.
+It is a portable [Agent Skill](https://agentskills.io) (a single `SKILL.md` plus
+references). It works in Claude Code, Cursor, Windsurf, Codex, and any other tool
+that reads the format.
 
 ---
 
-## The one idea
+## Why this and not "just reflect more"
 
-Socrates could not cross-examine someone who had not made a claim. Neither can
-an AI. An assistant wakes up with amnesia every session, holds no thesis, and so
-can only ask generic questions. Generic questions are why Socratic AI feels like
-a quiz.
+Because "reflect more" does not work, and the research is blunt about it: an
+agent that only doubts *itself*, with no external signal, is net neutral-to-
+negative on reasoning - it grades its own homework, shares its own blind spots,
+and talks correct answers into wrong ones about as often as the reverse. Telling
+a model to "be more careful" mostly buys you longer, more confident
+rationalizations.
 
-So the first artifact this skill produces is not code, a plan, or a design. It
-is **the dossier**: a short written record of what you are actually trying to
-make, in your words, including the things you refuse to compromise. Once that
-exists, real questions become possible:
+So the skill is built on one rule, not a vibe:
 
-> "You said the one word was **calm**. You are asking for a streak counter with
-> a red badge. That is a guilt engine. Which one is giving way?"
+> **Every self-question must terminate in an external verdict - a run, a test,
+> the type checker, a constructed counterexample, the real source - or it gets
+> dropped, not narrated.**
 
-That question is unaskable without the dossier. It is also worth more than a
-hundred questions about assumptions. The dossier is the interlocutor.
-Everything else hangs off it.
-
-The dossier is a single markdown file (default: `.socratic/PROJECT.md`) written
-in your own words, with every decision dated. A vision that changes on purpose,
-in writing, with a reason, is a vision maturing. A vision that changes silently,
-one reasonable compromise at a time, is a product dying. The skill is the only
-thing in the room holding the original text, so it is the only thing that can
-tell the difference. That is the feature.
+Coding is the ideal home for it because the interpreter is a truth oracle the
+agent can query cheaply. Instead of arguing itself into a fix, it commits a
+prediction ("the top stack frame is a null-pointer in `render`"), runs the
+repro, and lets the gap redirect the work. The doubt is empirical, not
+introspective.
 
 ---
 
-## The vision interview
+## Read this first: it stays out of the way
 
-Eight questions, domain-general, one at a time. The full domain variants
-(product, design, code, writing, business) are in
-[`references/interviews.md`](references/interviews.md).
+The most common way a "more careful AI" fails is by turning every task into a
+ceremony. This one is gated, and the default is speed.
 
-1. In one word, what should someone feel using this?
-2. If a ruthless minimalist designed this, what would they delete?
-3. If an obsessive craftsman made this, what would they add that 95% of people
-   would never notice?
-4. What is the one thing they must remember after they close it?
-5. What exists today that is closest, and what are you willing to be worse at?
-6. What would make this look amateur?
-7. What will you not compromise, even if it costs you users?
-8. Who is this explicitly not for?
+- **Trivial work** (a rename, a format, a fact it knows) gets **zero** extra
+  scrutiny. Skipping the loop there is the correct move, not laziness.
+- **Normal work** gets **one** prediction-backed check on the single riskiest
+  assumption, then ships.
+- **High-stakes / irreversible work** (a migration, a delete, a prod deploy)
+  gets the full loop - and because you cannot safely run the real action, it
+  tests a *surrogate*: a dry-run, a transaction it rolls back, a staging clone,
+  a canary.
+- **Incidents** get exactly one fast reversibility-and-blast-radius check, then
+  action. No philosophy while production is down.
 
-It reacts to your answers instead of marching down a script, refuses hedges like
-"clean and modern," and reads the whole thing back to you at the end so you can
-correct it. The correction is the most valuable moment in the interview.
+And it is **mostly silent**. The cross-examination happens in the agent's
+reasoning; you see the result - a plan it changed because a check moved it, or a
+decision only you can make - not a play-by-play of it doubting itself. If your
+transcript fills up with "let me question myself," the skill is failing, not
+working.
+
+It asks *you* a question only as a rare fallback: when self-questioning surfaces
+a genuine ambiguity in your intent that no check can resolve, and guessing wrong
+is costly. If a grep or a run could answer it, it checks instead of asking.
+
+---
+
+## The loop: Surface, Test, Reconcile
+
+- **SURFACE** - name the load-bearing assumptions, pick the one whose being
+  wrong would most cheaply sink the plan, and pre-commit the check to a decision
+  ("if the trace is not an NPE, this fix is dead"). If no result would change the
+  plan, don't run the check.
+- **TEST** - turn that assumption into the cheapest action that could *prove it
+  wrong*. Predict the discriminating observable first, then run. Reach for the
+  cheapest verifier that could flip the decision; for irreversible actions, run
+  a reversible surrogate; when nothing can run, look it up from a clean source or
+  hand it to a fresh-context reviewer - never re-read your own output for reasons
+  it was right.
+- **RECONCILE** - the prediction-vs-reality gap updates the plan. A match only
+  rules out the one way you thought you were wrong; it is not proof. Iterate only
+  on new evidence; surface only what changed or what needs a human decision.
 
 ---
 
@@ -89,7 +87,7 @@ correct it. The correction is the most valuable moment in the interview.
 
 The skill lives at the root of this repo (`SKILL.md` plus `references/` and
 `assets/`), so installing it is just putting this folder where your agent looks
-for skills.
+for skills. Clone it once and let the agent activate it on its own.
 
 ### Claude Code
 
@@ -106,8 +104,8 @@ git clone https://github.com/ergini/socratic-method.git .claude/skills/socratic-
 ```
 
 Then start Claude Code. It reads the skill's description and activates it on its
-own when you begin something new or say things like "help me think through this"
-or "poke holes in this." You never have to invoke it by hand.
+own when you are debugging, planning a change, or about to do something
+irreversible.
 
 ### Cursor
 
@@ -116,16 +114,13 @@ git clone https://github.com/ergini/socratic-method.git .cursor/skills/socratic-
 ```
 
 Cursor also scans `.claude/skills/`, so a project already set up for Claude Code
-needs nothing extra. Invoke with `/socratic-method` or `@` if you want it on
-demand.
+needs nothing extra. Invoke with `/socratic-method` or `@` for on-demand use.
 
 ### Windsurf
 
 ```bash
 git clone https://github.com/ergini/socratic-method.git .windsurf/skills/socratic-method
 ```
-
-Cascade reads the `description` frontmatter and auto-activates.
 
 ### Codex CLI
 
@@ -141,11 +136,10 @@ will pick up `SKILL.md` and its references.
 
 ### Claude.ai, ChatGPT, Gemini, or any chat UI (no filesystem)
 
-There is no skills directory in a plain chat, so paste the contents of
-[`SKILL.md`](SKILL.md) into a Project's custom instructions or a saved
-style/persona. It will look for the dossier in the conversation or the Project
-context instead of on disk. Keeping the dossier text pinned in the Project is
-what gives it memory across chats.
+Paste the contents of [`SKILL.md`](SKILL.md) into a Project's custom
+instructions or a saved style. Predict-then-run still works whenever the chat can
+run code; where it cannot, the skill degrades honestly - it lowers its confidence
+and names the check that would settle a claim rather than faking a verdict.
 
 ---
 
@@ -153,49 +147,43 @@ what gives it memory across chats.
 
 ```
 socratic-method/
-|- SKILL.md                     # the skill: gate, three modes, the interview, confrontation, craft
+|- SKILL.md                     # the skill: the gate, the Surface/Test/Reconcile loop, anti-theater rules, when to ask the user
 |- references/
-|  |- interviews.md             # the eight questions, per domain (product, design, code, writing, business)
-|  \- lenses.md                 # real practitioners' operating principles turned into questions
+|  |- self-questioning.md       # the full toolkit: verifier ladder, surrogate verifiers, degraded/read-only mode, nondeterminism
+|  |- lenses.md                 # real practitioners' operating principles, turned into questions you ask your own work
+|  \- interviews.md             # the demoted user-interview: the two-condition gate for when to ask, plus domain question sets
 |- assets/
-|  \- PROJECT.template.md       # the dossier template
+|  \- PROJECT.template.md       # the slim record: intent + live, re-checkable assumptions
 |- evals/
-|  \- evals.json                # multi-turn, multi-session eval scenarios and personas
+|  \- evals.json                # behavioral evals that read the tool trace, not just the prose
 \- docs/
-   \- build-plan.md             # the research dossier this skill was designed from
+   \- build-plan.md             # the research this skill was designed from, cited qualitatively
 ```
 
-`references/` and `assets/` load only when the skill actually needs them
-(progressive disclosure), so the always-in-context part stays small.
-
----
-
-## Why it works, briefly
-
-This is not "make the AI ask questions instead of answering." That naive version
-fails for well-documented reasons: assistants leak the answer under the mildest
-pressure, minimal guidance genuinely harms people who lack the schema to fill it
-in, and questioning an expert who just wants a flag name is friction, not
-teaching. The skill is designed around those failure modes, not in ignorance of
-them: a gate that decides when not to be Socratic, a confrontation that fires
-once and never nags, a hint ladder that always terminates in a real answer, and
-a hard rule against fabricating what a person or company "would say."
-
-The reasoning, the sources, and the eval design are in
-[`docs/build-plan.md`](docs/build-plan.md).
+`references/` and `assets/` load only when the skill needs them (progressive
+disclosure), so the always-in-context part stays small.
 
 ---
 
 ## Evals
 
-Socratic behavior is a multi-turn, multi-session property. A single-shot eval
-will happily pass a skill that is catastrophic in practice: leakage happens on
-turn 4, sycophancy on turn 6, drift across a whole session. So the scenarios in
-[`evals/evals.json`](evals/evals.json) run as dialogues, some of them across a
-fresh session with only the dossier carried over, and they score the things that
-actually matter: did it catch a real contradiction, did it leave a false one
-alone, did it obey after being overruled, did it invent an authority it does not
-have.
+The behavior is mostly internal, so the evals score what is actually observable:
+the **tool trace** (did a real check precede the claim it verified, and did a
+committed prediction precede the run?) and the **output delta** (did the check
+change the plan or recalibrate confidence?). A transcript full of narrated doubt
+is a failure, not a pass. See [`evals/evals.json`](evals/evals.json).
+
+---
+
+## The reasoning behind it
+
+The design is grounded in real, checkable work - Feynman on not fooling yourself,
+the finding that intrinsic self-correction is net-negative (Huang et al.), the
+self-verification limits of language models (Stechly, Valmeekam, Kambhampati),
+execution-grounded self-debugging (Chen et al.), chain-of-verification
+(Dhuliawala et al.), Popper on falsification, Klein's premortem, Beck's
+red-green, Simon's satisficing. Every finding is cited qualitatively, with no
+invented numbers, in [`docs/build-plan.md`](docs/build-plan.md).
 
 ---
 
