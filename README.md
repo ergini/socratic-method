@@ -1,5 +1,7 @@
 # Socratic
 
+[![npm](https://img.shields.io/npm/v/socratic-method?logo=npm)](https://www.npmjs.com/package/socratic-method)
+
 **A skill that makes your AI agent cross-examine its own work before it ships.**
 When it commits to a plan, a diagnosis, a refactor, or a confident claim, it
 turns Socratic elenchus inward: name the load-bearing assumption, then refute it
