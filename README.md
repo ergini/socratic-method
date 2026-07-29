@@ -11,8 +11,9 @@ construct a counterexample - before building on it. The spine is
 as the finding.
 
 It is a portable [Agent Skill](https://agentskills.io) (a single `SKILL.md` plus
-references). It works in Claude Code, Cursor, Windsurf, Codex, and any other tool
-that reads the format.
+references). One `npx` command installs it for every tool that reads the format -
+Claude Code, Codex, Cursor, VS Code / Copilot, Gemini CLI, Windsurf, Amp, Roo
+Code, Kiro and more.
 
 ---
 
@@ -88,74 +89,89 @@ is costly, it brings you one sharp question with the options laid out.
 
 ## Install
 
-The fastest path is `npx` - it copies `SKILL.md` and its `references/` and
-`assets/` into your agent's skills directory, no clone required:
+One command, every tool. `npx` copies `SKILL.md` and its `references/` and
+`assets/` into the directories your agents actually read - no clone required:
 
 ```bash
-npx socratic-method                 # ./.claude/skills   (Claude Code, this project)
-npx socratic-method --global        # ~/.claude/skills   (every project)
-npx socratic-method --tool cursor   # ./.cursor/skills
-npx socratic-method --tool codex -g # ~/.agents/skills
-npx socratic-method --dir ./skills  # ./skills/socratic-method
+npx socratic-method
 ```
-
-`--tool` is one of `claude` (default), `cursor`, `windsurf`, or `codex`; `--global`
-installs it for every project (Claude Code and Codex only - Cursor and Windsurf are
-project-scoped). Re-run it any time to update. Prefer not to touch the npm registry?
-`npx github:ergini/socratic-method` runs the same installer straight from the repo.
-
-Or do it by hand - the skill is just files, so clone this folder into wherever your
-agent looks for skills and let it activate on its own.
-
-### Claude Code
-
-Available in every project (personal skills directory):
 
 ```bash
-git clone https://github.com/ergini/socratic-method.git ~/.claude/skills/socratic-method
+npx socratic-method --global
 ```
 
-Or scoped to a single project (run from the repo root):
+The first installs it for the current project, the second for every project on
+the machine. Re-run either any time to update.
+
+**Why one command covers everything.** Two directories carry almost the whole
+ecosystem: `.agents/skills/` is the cross-agent path, and Claude Code is the one
+major tool that reads only its own. So the default install writes exactly those
+two - `.agents/skills/` and `.claude/skills/` - and between them Claude Code,
+Codex, Cursor, VS Code / Copilot, Gemini CLI, Windsurf, Amp and Roo Code all pick
+the skill up. Tools those two miss (Kiro, Factory, OpenCode) are added
+automatically when the installer detects you use them.
+
+Narrow it down when you want to:
 
 ```bash
-git clone https://github.com/ergini/socratic-method.git .claude/skills/socratic-method
+npx socratic-method --tool cursor
 ```
-
-Then start Claude Code. It reads the skill's description and activates it on its
-own when you are debugging, planning a change, or about to do something
-irreversible.
-
-### Cursor
 
 ```bash
-git clone https://github.com/ergini/socratic-method.git .cursor/skills/socratic-method
+npx socratic-method --all
 ```
-
-Cursor loads skills per project from `.cursor/skills/` and has no global skills
-folder, so each project needs its own copy - it does not read `.claude/skills/`.
-Invoke with `/socratic-method` or `@` for on-demand use.
-
-### Windsurf
 
 ```bash
-git clone https://github.com/ergini/socratic-method.git .windsurf/skills/socratic-method
+npx socratic-method --list
 ```
 
-### Codex CLI
+`--tool` installs for one tool only (`claude`, `codex`, `cursor`, `vscode`,
+`gemini`, `windsurf`, `amp`, `opencode`, `roo`, `kiro`, `factory`); `--all` covers
+every known tool whether or not it is detected here; `--list` prints the table
+below and exits; `--dir <path>` installs into a directory you name. Prefer not to
+touch the npm registry? `npx github:ergini/socratic-method` runs the same
+installer straight from the repo.
+
+### Where it lands
+
+Each path below is the one that tool's own documentation specifies. Re-running
+the installer is how you update.
+
+| Tool | Project | Personal (`--global`) |
+|---|---|---|
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
+| Codex | `.agents/skills/` | `~/.agents/skills/` |
+| Cursor | `.cursor/skills/` | `~/.cursor/skills/` |
+| VS Code / Copilot | `.github/skills/` | `~/.copilot/skills/` |
+| Gemini CLI | `.gemini/skills/` | `~/.gemini/skills/` |
+| Windsurf | `.windsurf/skills/` | - (project-scoped) |
+| Amp | `.agents/skills/` | `~/.config/amp/skills/` |
+| OpenCode | `.opencode/skills/` | `~/.config/opencode/skills/` |
+| Roo Code | `.roo/skills/` | `~/.roo/skills/` |
+| Kiro | `.kiro/skills/` | `~/.kiro/skills/` |
+| Factory Droid | `.factory/skills/` | `~/.factory/skills/` |
+
+Cursor, VS Code / Copilot, Windsurf, Amp and Roo Code *also* read
+`.agents/skills/` and/or `.claude/skills/`, and Gemini CLI treats `.agents/skills/`
+as an alias for its own - which is why the default install needs only those two.
+
+Or do it by hand - the skill is just files, so clone this folder into any
+directory in that table and let it activate on its own:
 
 ```bash
 git clone https://github.com/ergini/socratic-method.git .agents/skills/socratic-method
 ```
 
-Codex scans `.agents/skills/` from your working directory up to the repo root; use
-`~/.agents/skills/` for a personal copy available in every project.
+Then start your agent. It reads the skill's description and activates it on its
+own when you are debugging, planning a change, or about to do something
+irreversible; most tools also let you invoke it directly with `/socratic-method`.
 
 ### Any other agent that reads SKILL.md
 
-The format is an open standard, but each tool looks in its own place - Claude Code
-`.claude/skills/`, Cursor `.cursor/skills/`, Codex `.agents/skills/` - so check
-your tool's docs for its skills directory, clone the repo there, and it will pick
-up `SKILL.md` and its references.
+The format is an [open standard](https://agentskills.io), and adoption is wider
+than the table above. If your tool is not listed, check its docs for its skills
+directory and either clone the repo there or point the installer at it with
+`npx socratic-method --dir <that directory>`.
 
 ### Claude.ai, ChatGPT, Gemini, or any chat UI (no filesystem)
 
