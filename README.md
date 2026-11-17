@@ -131,6 +131,8 @@ every known tool whether or not it is detected here; `--list` prints the table
 below and exits; `--dir <path>` installs into a directory you name. Prefer not to
 touch the npm registry? `npx github:ergini/socratic-method` runs the same
 installer straight from the repo.
+Already use the [skills CLI](https://skills.sh)? `npx skills add ergini/socratic-method`
+installs it too.
 
 ### Where it lands
 
